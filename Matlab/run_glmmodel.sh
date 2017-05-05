@@ -27,7 +27,7 @@ else
       args="${args} \"${token}\"" 
       shift
   done
-  eval "\"${exe_dir}/glmmodelv4f\"" $args
+  eval "\"${exe_dir}/glmmodel\"" $args
 fi
 exit
 
