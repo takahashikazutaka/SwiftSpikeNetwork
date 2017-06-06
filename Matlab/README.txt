@@ -5,5 +5,21 @@ package=glmmodel
 #To compile each, use
 mcc -R -singleCompThread -R -nojvm -R -nodisplay -mv ${package}.m -o ${package}
 
+#Need to modify the shell scripts to prevent them from locking each other up
+#after #! and comments
+#Added to run on Beagle after June 2017 
+"TMP=/tmp/
+umask 0000
+tmp=`mktemp -d $TMP/matlabcachedir.XXXXXXXXXXX`
+echo $tmp
+export MCR_CACHE_ROOT=$tmp"
+
+#Add the following before 
+#fi
+#exit
+rm -rf $tmp
+
 #Location of the run time environment
 MCRPath = "/soft/matlab/R2015b"
+
+

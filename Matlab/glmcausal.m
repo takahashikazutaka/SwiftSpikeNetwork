@@ -1,23 +1,21 @@
-function glmcausalv4k2p1(filestring, ix, aicfile)
+function glmcausal(filestring, aicfile)
 load(filestring);
 load(aicfile);
-%loadevents = load('/project/nicho/BMI/glmmodel/data/selectedevents.mat');
-%Sselevents = loadevents.caseinclude{43};
 disp([filestring aicfile]);
 htmax = 60;
 win=3;
 history = win:win:htmax;
 
+% We don't need to replace X with spkmat which is used already in the glm
+% model construction 
+% spkmat = X;
+% spkmat = spkmat(:, 2000:3000, :);
 
-spkmat = X;
-spkmat = spkmat(:, 2000:3000, :);
 [totneurons, samples, trial] = size(spkmat);
 Aic = ht.aic;
 D = zeros(totneurons,totneurons);
 SGN = zeros(totneurons,totneurons);
-    %bhatc = zeros(10,10,201);
-    % GLM parameter estimation
-    % no nested parfor loops
+
     for target = 1:totneurons
         for trigger = 1:totneurons
             disp([target,trigger]);
@@ -28,7 +26,8 @@ SGN = zeros(totneurons,totneurons);
             % Deviance difference
             D(target,trigger) = dctmp - devnew{win*Aic(target),target};
             %             % Sign of interactions from trigger to target
-            SGN(target,trigger) = sign(sum(bhat{win*Aic(target),target}(Aic(target)*(trigger-1)+2:Aic(target)*trigger+1)));
+            SGN(target,trigger) = sign(sum(bhat{win*Aic(target),target}(Aic(target)*(trigger-1)+2:Aic(target)*trigger+1
+)));
         end
     end
     
@@ -41,6 +40,5 @@ SGN = zeros(totneurons,totneurons);
     p = 0.01;
     [GCMAP] = FDR(D,p,15/win*ones(1,totneurons));
     [~, name, ~] = fileparts(filestring);
-    % Save results Z:\BMI\glmmodel\graspresults\selectedevents
-    currentfile = sprintf('/lustre/beagle2/bkintex/glmmodel/data/glmcausalou/%s_CNA.mat', name);
+    currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmcausalou/%s_CNA.mat', name);
     save(currentfile, 'spkmat','bhat','bhatc','devc','devnew','D','MAP','SGN','GCMAP', '-v7.3');

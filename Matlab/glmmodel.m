@@ -1,17 +1,15 @@
-function glmmodelv4f(filestring, ix)
+function glmmodel(filestring)
 load(filestring);
-% loadevents = load('/project/nicho/BMI/glmmodel/data/selectedevents.mat');
-% selevents = loadevents.caseinclude{43};
 htmax = 60;
 win=3;
 history = win:win:htmax;
+% A new pieces added by Karth and we will not use these. 
+% spkmat = X;
+% spkmat = spkmat(:, 2000:3000, :);
 
-spkmat = X;
-
-spkmat = spkmat(:, 2000:3000, :);
 [totneurons, samples, trial] = size(spkmat);
 
-disp(strcat('Number of Neurons:', num2str(totneurons)));
+% disp(strcat('Number of Neurons:', num2str(totneurons)));
 
 for n = 1:totneurons
     disp(strcat(num2str(n),'_of_', num2str(totneurons)));
@@ -25,8 +23,8 @@ for n = 1:totneurons
     end
 end
 [~, name, ~] = fileparts(filestring);
-currentfile = sprintf('/lustre/beagle2/bkintex/glmmodel/data/glmmodelou/%s_GLM.mat', name);
-disp(size(result));
-whos('result');
+currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmmodelou/%s_GLM.mat', name);
+% disp(size(result));
+% whos('result');
 save(currentfile, 'result', 'filestring', '-v7.3');
 clear spkmat
