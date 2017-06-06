@@ -26,6 +26,8 @@ if trigger
         % Build the design matrix
         [Xs, Ys] = makeDesignMatrix(X, n, ht, w, htmax);
     end
+else
+    [Xs, Ys] = makeDesignMatrix(X, n, ht, w, htmax);
 end;
 
 
