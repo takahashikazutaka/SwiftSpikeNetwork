@@ -1,0 +1,10 @@
+#Ignore all files
+*
+# Unignore all dirs
+!*/
+#Not ignore files with extensions
+!*.*
+#Ignore the files made by matlab
+requiredMCRProducts.txt
+readme.txt
+mccExcludedFiles.log
