@@ -24,7 +24,7 @@ MCRPath="/soft/matlab/R2015b"
 
 run script as 
 
-../Matlab/run_glmaic.sh $MCRPath /lustre/beagle2/NeuralCausal/z20130830_SPK_6_CNA.mat
+../Matlab/run_glmmodel.sh $MCRPath /lustre/beagle2/NeuralCausal/z20130830_SPK_6_CNA.mat
 
 
 
