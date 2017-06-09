@@ -1,5 +1,5 @@
-function glmcausal(filestring, aicfile)
-load(filestring);
+function glmcausal(filestring, aicfile, usedsamples, sampleID)
+% load(filestring);
 load(aicfile);
 disp([filestring aicfile]);
 htmax = 60;
@@ -9,7 +9,7 @@ history = win:win:htmax;
 % We don't need to replace X with spkmat which is used already in the glm
 % model construction 
 % spkmat = X;
-% spkmat = spkmat(:, 2000:3000, :);
+spkmat = spkmat(:, 501:1500, find(usedsamples)); 
 
 [totneurons, samples, trial] = size(spkmat);
 Aic = ht.aic;
@@ -26,8 +26,7 @@ SGN = zeros(totneurons,totneurons);
             % Deviance difference
             D(target,trigger) = dctmp - devnew{win*Aic(target),target};
             %             % Sign of interactions from trigger to target
-            SGN(target,trigger) = sign(sum(bhat{win*Aic(target),target}(Aic(target)*(trigger-1)+2:Aic(target)*trigger+1
-)));
+            SGN(target,trigger) = sign(sum(bhat{win*Aic(target),target}(Aic(target)*(trigger-1)+2:Aic(target)*trigger+1))); 
         end
     end
     
@@ -39,6 +38,9 @@ SGN = zeros(totneurons,totneurons);
     % With FDR
     p = 0.01;
     [GCMAP] = FDR(D,p,15/win*ones(1,totneurons));
-    [~, name, ~] = fileparts(filestring);
-    currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmcausalou/%s_CNA.mat', name);
+    [~, name, ~] = fileparts(aicfile);
+    name = name(1:strfind(name,'#')-2); 
+    
+    currentfile = ['/lustre/beagle2/NeuralCausal/data/glmcausalou/',name,'_#',num2str(sampleID),'CNA.mat']
+    % currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmcausalou/%s_CNA.mat', name);
     save(currentfile, 'spkmat','bhat','bhatc','devc','devnew','D','MAP','SGN','GCMAP', '-v7.3');

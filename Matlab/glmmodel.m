@@ -1,4 +1,4 @@
-function glmmodel(filestring)
+function glmmodel(filestring,usedsamples,sampleID)
 load(filestring);
 htmax = 60;
 win=3;
@@ -6,6 +6,8 @@ history = win:win:htmax;
 % A new pieces added by Karth and we will not use these. 
 % spkmat = X;
 % spkmat = spkmat(:, 2000:3000, :);
+% Following what Karth has done for Nature Comm manuscript 
+spkmat = spkmat(:, 501:1500, find(usedsamples)); 
 
 [totneurons, samples, trial] = size(spkmat);
 
@@ -23,7 +25,7 @@ for n = 1:totneurons
     end
 end
 [~, name, ~] = fileparts(filestring);
-currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmmodelou/%s_GLM.mat', name);
+currentfile = ['/lustre/beagle2/NeuralCausal/data/glmmodelou/',name,'_#',num2str(sampleID),'GLM.mat']
 % disp(size(result));
 % whos('result');
 save(currentfile, 'result', 'filestring', '-v7.3');

@@ -1,0 +1,34 @@
+set of scripts to run a sweep of permutations to estimate errors in GC models
+
+The scripts are based on a EMEWS/swift-t template: http://www.mcs.anl.gov/~emews
+
+The main script (to launch a "campaign" of jacknife sequences) is:
+swift/swift_run_sweep.sh
+
+which can be run as
+./swift_run_sweep.sh —max_runs=20
+
+So that way the “—max_runs=20” can get passed to the swift script and will affect
+how swift will run the jobs
+
+The script contains a set of variables that can be set to change the behavior
+MACHINE="" will make it run locally without submittion ("PBS" and so on will change that)
+
+<See email from Justin for more ;-)> 
+
+
+The run will need an input file, which defined the parameters that will be swept
+by the run, in this case the various permutations of a subset of the trials in
+the data. The file is in:
+data/input.txt
+
+and contains on each line:
+<.mat file wit the entirety of the dataset> <mask of 0 and 1> <numerical ID for the specific permutation>
+
+The file is generated using a rscript program
+../../R/generatePermutations.R 
+
+The swift scrip will apply the shell script scripts/GC.sh which runs a sequence of 3 compiled matlab 
+functions, whose source is in
+../../Matlab/
+

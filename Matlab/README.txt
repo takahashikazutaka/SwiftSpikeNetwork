@@ -22,9 +22,18 @@ rm -rf $tmp
 #Location of the run time environment
 MCRPath="/soft/matlab/R2015b"
 
-run script as 
+# Initial fit on the entirety of the mat file run script as 
+# MCRPath simply tells the script where the runtime environment for Matlab it
+# <spike file> contains the 01... sequence of spikes for the 3D array times trials
+../Matlab/run_glmmodel.sh $MCRPath <spike file>
+# Call to make a subsample of the set (for estimating errors or other purposes
+#<trial mask> is a sequence of 0s and 1s that established which trial
+#<mask id> is a number that allows to easily rename files specifically for this mask run 
+../Matlab/run_glmmodel.sh $MCRPath <spike file> <trial mask> <mask id>
+#E.g.
+../Matlab/run_glmmodel.sh $MCRPath /lustre/beagle2/NeuralCausal/data/inpu/z20130830_SPK_6_CNA.mat 11111111101111111111111111011111111110111111110111111100111111111111011111111111111111101010111111111111111111111100111111111111111101111111111111110111111110101111110111111111111101111111111111111111011001111111111111111111110111011111111101111111111111101011111111010111 1
 
-../Matlab/run_glmmodel.sh $MCRPath /lustre/beagle2/NeuralCausal/z20130830_SPK_6_CNA.mat
+
 
 
 
