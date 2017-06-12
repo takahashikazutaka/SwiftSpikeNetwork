@@ -25,7 +25,7 @@ for n = 1:totneurons
     end
 end
 [~, name, ~] = fileparts(filestring);
-currentfile = ['/lustre/beagle2/NeuralCausal/data/glmmodelou/',name,'_#',num2str(sampleID),'GLM.mat']
+currentfile = ['/lustre/beagle2/NeuralCausal/data/',name,'_#',num2str(sampleID),'GLM.mat']
 % disp(size(result));
 % whos('result');
 save(currentfile, 'result', 'filestring', '-v7.3');

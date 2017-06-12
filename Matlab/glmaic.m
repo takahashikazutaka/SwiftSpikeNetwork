@@ -1,7 +1,6 @@
 function glmaic(filestring, sampleID)
 htmax = 60;
 win=3;
-
 load(filestring);
 
 [numN, ~] = size(result);
@@ -35,7 +34,7 @@ devnew = Devnew;
 [~, name, ~] = fileparts(filestring);
 name = name(1:strfind(name,'#')-2); 
 
-currentfile = ['/lustre/beagle2/NeuralCausal/data/glmaicou/',name,'_#',num2str(sampleID),'AIC.mat']
+currentfile = ['/lustre/beagle2/NeuralCausal/data/',name,'_#',num2str(sampleID),'AIC.mat']
 
 % currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmaicou/%s_AIC.mat', name);
 save(currentfile, 'bhat', 'LLK', 'aic', 'bic', 'ht', 'devnew','spkmat','filestring', '-v7.3');

@@ -1,7 +1,7 @@
-function glmcausal(filestring, aicfile, usedsamples, sampleID)
+function glmcausal(aicfile, usedsamples, sampleID)
 % load(filestring);
 load(aicfile);
-disp([filestring aicfile]);
+
 htmax = 60;
 win=3;
 history = win:win:htmax;
@@ -9,7 +9,7 @@ history = win:win:htmax;
 % We don't need to replace X with spkmat which is used already in the glm
 % model construction 
 % spkmat = X;
-spkmat = spkmat(:, 501:1500, find(usedsamples)); 
+%spkmat = spkmat(:, 501:1500, find(usedsamples)); 
 
 [totneurons, samples, trial] = size(spkmat);
 Aic = ht.aic;
@@ -41,6 +41,6 @@ SGN = zeros(totneurons,totneurons);
     [~, name, ~] = fileparts(aicfile);
     name = name(1:strfind(name,'#')-2); 
     
-    currentfile = ['/lustre/beagle2/NeuralCausal/data/glmcausalou/',name,'_#',num2str(sampleID),'CNA.mat']
+    currentfile = ['/lustre/beagle2/NeuralCausal/data/',name,'_#',num2str(sampleID),'CNA.mat']
     % currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmcausalou/%s_CNA.mat', name);
     save(currentfile, 'spkmat','bhat','bhatc','devc','devnew','D','MAP','SGN','GCMAP', '-v7.3');
