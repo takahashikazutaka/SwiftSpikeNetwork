@@ -1,4 +1,4 @@
-function glmcausal(aicfile, usedsamples, sampleID)
+function glmcausal(aicfile, sampleID)
 % load(filestring);
 load(aicfile);
 

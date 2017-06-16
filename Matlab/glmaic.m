@@ -31,10 +31,11 @@ ht = Ht;
 % stats = Stats; 
 devnew = Devnew;
 
-[~, name, ~] = fileparts(filestring);
-name = name(1:strfind(name,'#')-2); 
+[~, name, ~] = fileparts(filestring)
+%disp('here')
+name = [name(1:strfind(name,'#')-2)]
 
 currentfile = ['/lustre/beagle2/NeuralCausal/data/',name,'_#',num2str(sampleID),'AIC.mat']
 
 % currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmaicou/%s_AIC.mat', name);
-save(currentfile, 'bhat', 'LLK', 'aic', 'bic', 'ht', 'devnew','spkmat','filestring', '-v7.3');
+save(currentfile, 'bhat', 'LLK', 'aic', 'bic', 'ht', 'devnew','spkmat', '-v7.3');

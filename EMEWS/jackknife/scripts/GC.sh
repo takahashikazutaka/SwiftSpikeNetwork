@@ -44,10 +44,12 @@ permutationID=$( awk '{print $3}' <<<$param_line )
 MCRPath="/soft/matlab/R2015b" 
 GCModelDir="/autonfs/home/lpesce/Taka/Matlab" 
 
+echo PARAMLINE: $param_line
+
 # TODO: Define the command to run the model
 MODEL_CMDA=("$GCModelDir/run_glmmodel.sh $MCRPath $param_line" 
-"$GCModelDir/run_glmaic.sh $MCRPath ${spikeFileRootName}.GLM.mat $permutationID"
-"$GCModelDir/run_glmmodel.sh $MCRPath ${spikeFileRootName}.mat ${spikeFileRootName}.AIC.mat $permutationMask $permutationID"
+"$GCModelDir/run_glmaic.sh $MCRPath ${spikeFileRootName}_#${permutationID}GLM.mat $permutationID"
+"$GCModelDir/run_glmcausal.sh $MCRPath ${spikeFileRootName}.#${permutationID}AIC.mat $permutationID"
 )
 
 
