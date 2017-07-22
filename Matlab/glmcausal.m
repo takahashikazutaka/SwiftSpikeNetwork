@@ -1,4 +1,4 @@
-function glmcausal(aicfile, sampleID)
+function glmcausal(aicfile,savepath, sampleID)
 % load(filestring);
 load(aicfile);
 
@@ -41,6 +41,6 @@ SGN = zeros(totneurons,totneurons);
     [~, name, ~] = fileparts(aicfile);
     name = name(1:strfind(name,'#')-2); 
     
-    currentfile = ['/lustre/beagle2/NeuralCausal/data/',name,'_#',num2str(sampleID),'CNA.mat']
+    currentfile = [savepath,name,'_#',num2str(sampleID),'CNA.mat']
     % currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmcausalou/%s_CNA.mat', name);
     save(currentfile, 'spkmat','bhat','bhatc','devc','devnew','D','MAP','SGN','GCMAP', '-v7.3');

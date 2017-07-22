@@ -4,6 +4,12 @@
 # Sets up the MATLAB Runtime environment for the current $ARCH and executes 
 # the specified command.
 #
+TMP=/tmp
+umask 0000
+tmp=`mktemp -d $TMP/matlabcachedir.XXXXXXXXXXX`
+echo $tmp
+export MCR_CACHE_ROOT=$tmp
+
 exe_name=$0
 exe_dir=`dirname "$0"`
 echo "------------------------------------------"
@@ -27,7 +33,8 @@ else
       args="${args} \"${token}\"" 
       shift
   done
-  eval "\"${exe_dir}/glmcausalv4f\"" $args
+  eval "\"${exe_dir}/glmcausal\"" $args
+rm -rf $tmp
 fi
 exit
 

@@ -33,7 +33,7 @@ else
       args="${args} \"${token}\"" 
       shift
   done
-  eval "\"${exe_dir}/glmaicv4f\"" $args
+  eval "\"${exe_dir}/glmaic\"" $args
 rm -rf $tmp
 fi
 exit

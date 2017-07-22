@@ -36,9 +36,13 @@ emews_root=$2
 # Each model run, runs in its own "instance" directory
 # Set instance_directory to that and cd into it.
 instance_directory=$3
+workDir=$(readlink -f $instance_directory)
 cd $instance_directory
 
 spikeFileRootName=$( awk '{print $1}' <<<$param_line| sed 's/\.mat//')
+rootFileName=$(basename $spikeFileRootName)
+inputDir=$( dirname $spikeFileRootName)
+#Currenly defining workdir the same as datadir
 permutationMask=$( awk '{print $2}' <<<$param_line )
 permutationID=$( awk '{print $3}' <<<$param_line )
 MCRPath="/soft/matlab/R2015b" 
@@ -47,9 +51,9 @@ GCModelDir="/autonfs/home/lpesce/Taka/Matlab"
 echo PARAMLINE: $param_line
 
 # TODO: Define the command to run the model
-MODEL_CMDA=("$GCModelDir/run_glmmodel.sh $MCRPath $param_line" 
-"$GCModelDir/run_glmaic.sh $MCRPath ${spikeFileRootName}_#${permutationID}GLM.mat $permutationID"
-"$GCModelDir/run_glmcausal.sh $MCRPath ${spikeFileRootName}.#${permutationID}AIC.mat $permutationID"
+MODEL_CMDA=("$GCModelDir/run_glmmodel.sh $MCRPath ${spikeFileRootName}.mat $workDir/ $permutationMask $permutationID"
+"$GCModelDir/run_glmaic.sh $MCRPath ${workDir}/${rootFileName}_#${permutationID}GLM.mat $workDir/ $permutationID"
+"$GCModelDir/run_glmcausal.sh $MCRPath ${workDir}/${rootFileName}_#${permutationID}AIC.mat $workDir/ $permutationID"
 )
 
 

@@ -6,16 +6,13 @@ The main script (to launch a "campaign" of jacknife sequences) is:
 swift/swift_run_sweep.sh
 
 which can be run as
-./swift_run_sweep.sh —max_runs=20
+${EMEWS_ROOTDIR}/swift/swift_run_sweep.sh <name of campaign>
 
-So that way the “—max_runs=20” can get passed to the swift script and will affect
-how swift will run the jobs
 
 The script contains a set of variables that can be set to change the behavior
 MACHINE="" will make it run locally without submittion ("PBS" and so on will change that)
 
 <See email from Justin for more ;-)> 
-
 
 The run will need an input file, which defined the parameters that will be swept
 by the run, in this case the various permutations of a subset of the trials in

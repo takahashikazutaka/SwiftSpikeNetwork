@@ -1,4 +1,4 @@
-function glmmodel(filestring,usedsamples,sampleID)
+function glmmodel(filestring,savepath,usedsamples,sampleID)
 load(filestring);
 htmax = 60;
 win=3;
@@ -26,7 +26,7 @@ for n = 1:totneurons
 end
 [~, name, ~] = fileparts(filestring);
 
-currentfile = ['/lustre/beagle2/NeuralCausal/data/',name,'_#',num2str(sampleID),'GLM.mat']
+currentfile = [savepath,name,'_#',num2str(sampleID),'GLM.mat']
 % disp(size(result));
 % whos('result');
 save(currentfile, 'result', 'spkmat', '-v7.3');
