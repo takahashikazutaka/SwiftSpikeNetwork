@@ -39,6 +39,22 @@ instance_directory=$3
 workDir=$(readlink -f $instance_directory)
 cd $instance_directory
 
+#Performance Log files will be produced 5% of the time unless already running on node
+# in the $instance_directory
+sleep $((RANDOM % 11)) # wait some random amount of time between 0 and 10 seconds 
+if ps ax | grep -v grep | grep top > /dev/null
+then
+ echo "top is already running on this node"
+else
+  MOD=20
+  number=$(($RANDOM % $MOD))
+  if [ "$number" -eq 0 ]; then
+    #Performance logs
+    top -b -d 600.00 -n 60 -u $(whoami) >top.log &
+  fi
+fi
+
+
 spikeFileRootName=$( awk '{print $1}' <<<$param_line| sed 's/\.mat//')
 rootFileName=$(basename $spikeFileRootName)
 inputDir=$( dirname $spikeFileRootName)
@@ -46,7 +62,8 @@ inputDir=$( dirname $spikeFileRootName)
 permutationMask=$( awk '{print $2}' <<<$param_line )
 permutationID=$( awk '{print $3}' <<<$param_line )
 MCRPath="/soft/matlab/R2015b" 
-GCModelDir="/autonfs/home/lpesce/Taka/Matlab" 
+#GCModelDir="/autonfs/home/lpesce/Taka/Matlab" 
+GCModelDir="/lustre/beagle2/lpesce/Taka/Matlab"
 
 echo PARAMLINE: $param_line
 

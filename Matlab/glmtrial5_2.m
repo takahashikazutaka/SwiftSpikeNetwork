@@ -1,5 +1,5 @@
 function [beta_new devnew] = glmtrial5_2(X, n, ht, w, htmax, trigger, initialCond)
-% n = index for the target neuron 
+% n = index for the target neuron spkmat,n,h,win,htmax
 % Parse inputs
 if nargin < 7
     initialCond = [];
@@ -26,8 +26,9 @@ if trigger
         % Build the design matrix
         [Xs, Ys] = makeDesignMatrix(X, n, ht, w, htmax);
     end
-else
+else 
     [Xs, Ys] = makeDesignMatrix(X, n, ht, w, htmax);
+
 end;
 
 
@@ -89,6 +90,7 @@ for itrial = 1:TRL
     end
 end
 
+
 function [Xs, Ys] = makeDesignMatrix1(X, n, ht, w, htmax,trigger)
 % This function generates the design matrix X, and the response matrix, Y, 
 %for the case when the trigger and target are the same.  
@@ -136,6 +138,8 @@ for itrial = 1:TRL
         Ys(isplit+(itrial-1)*10,:) = BIGYsub{itrial}(int_leng*(isplit-1)+1:int_leng*isplit);
     end
 end
+
+clear BIGY* BIGX* BX* BY* 
 
 function [beta_new devnew] = logisticRegression(Xs, Ys, beta_old)
 i = 0;
@@ -195,9 +199,11 @@ while (i < Irmax && devdiff > Ireps)
         A = A + Q*Xs(:,:,iepoch);
         b = b + Q*zsub{iepoch};
     end
-
+ clear Q 
     % Conjugate gradient method for symmetric postive definite matrix A
     beta_new = cgs(A,b,cgeps,cgmax,[],[],beta_old);
+clear A b 
+    
     beta_old = beta_new;
     
     devnew = 0;
@@ -216,6 +222,8 @@ while (i < Irmax && devdiff > Ireps)
 
     i = i+1;
 end
+clear Wsub musub eta zsub
+
 %{
 if nargout > 1
     % Compute additional statistics
