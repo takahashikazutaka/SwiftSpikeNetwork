@@ -8,3 +8,16 @@
 requiredMCRProducts.txt
 readme.txt
 mccExcludedFiles.log
+#Ignore files made by R
+R/runs.list
+
+#Ignore testing directories
+EMEWS/jackknife/coding_tests/
+EMEWS/jackknife/experiments/
+EMEWS/jackknife/test/
+#Ignore data and testing directories
+data/
+junk/
+old/
+
+
