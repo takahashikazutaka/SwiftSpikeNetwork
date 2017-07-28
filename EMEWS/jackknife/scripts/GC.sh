@@ -79,19 +79,23 @@ MODEL_CMDA=("$GCModelDir/run_glmmodel.sh $MCRPath ${spikeFileRootName}.mat $work
 # the optional timeout.
 set +e
 
+failedlog='failed_run.log' #each run of the swarm will log its failure (if any)
+[ -e "$failedlog" ] && rm $failedlog #If for any reason there is a failure log, remove it
+
 for MODEL_CMD in "${MODEL_CMDA[@]}"; do 
 
 $TIMEOUT_CMD $MODEL_CMD
 # $? is the exit status of the most recently executed command (i.e the
-# line above)
+# line above).Note that the call does not return failure 
 RES=$?
 if [ "$RES" -ne 0 ]; then
   if [ "$RES" == 124 ]; then
-    echo "---> Timeout error in $MODEL_CMD"
+    echo "---> Timeout error in $MODEL_CMD" >>$failedlog
   else
-    echo "---> Error in $MODEL_CMD"
+    echo "---> Error in $MODEL_CMD">>$failedlog
   fi
-  exit 1
+  break #No use in running the following commands
 fi
 
 done
+exit 0 #It does not bring down the entire EMEWS run, just leave a log of this failure in the instance dir
