@@ -9,6 +9,7 @@
 SpikeFileName='/lustre/beagle2/lpesce/Taka/data/Exp196/trans11/Win1/X.mat'
 totalSamples<-833
 percentSelected <-.07
+#percentSelected <-1.0
 
 nrOf1 <- as.integer(percentSelected*totalSamples)
 nrOf0 <- totalSamples - nrOf1

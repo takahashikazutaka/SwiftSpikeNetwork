@@ -69,8 +69,8 @@ echo PARAMLINE: $param_line
 
 # TODO: Define the command to run the model
 MODEL_CMDA=("$GCModelDir/run_glmmodel.sh $MCRPath ${spikeFileRootName}.mat $workDir/ $permutationMask $permutationID"
-"$GCModelDir/run_glmaic.sh $MCRPath ${workDir}/${rootFileName}_#${permutationID}GLM.mat $workDir/ $permutationID"
-"$GCModelDir/run_glmcausal.sh $MCRPath ${workDir}/${rootFileName}_#${permutationID}AIC.mat $workDir/ $permutationID"
+"$GCModelDir/run_glmaic.sh $MCRPath ${workDir}/${rootFileName}_GLM.mat $workDir/ $permutationID"
+"$GCModelDir/run_glmcausal.sh $MCRPath ${workDir}/${rootFileName}_AIC.mat $workDir/ $permutationID"
 )
 
 
