@@ -33,9 +33,9 @@ devnew = Devnew;
 
 [~, name, ~] = fileparts(filestring)
 %disp('here')
-name = [name(1:strfind(name,'#')-2)]
+name = [name(1:strfind(name,'G')-2)]
 
-currentfile = [savepath,name,'_#',num2str(sampleID),'AIC.mat']
+currentfile = [savepath,name,'_AIC.mat']
 
 % currentfile = sprintf('/lustre/beagle2/NeuralCausal/data/glmaicou/%s_AIC.mat', name);
 save(currentfile, 'bhat', 'LLK', 'aic', 'bic', 'ht', 'devnew','spkmat', '-v7.3');

@@ -62,8 +62,9 @@ inputDir=$( dirname $spikeFileRootName)
 permutationMask=$( awk '{print $2}' <<<$param_line )
 permutationID=$( awk '{print $3}' <<<$param_line )
 MCRPath="/soft/matlab/R2015b" 
-#GCModelDir="/autonfs/home/lpesce/Taka/Matlab" 
-GCModelDir="/lustre/beagle2/lpesce/Taka/Matlab"
+#The Matlab source and compiled scripts are assumed to be one step above the EMEWS core dirs
+#GCModelDir="/lustre/beagle2/lpesce/Taka/Matlab"
+GCModelDir=$(readlink -f "${emews_root}/../../Matlab")
 
 echo PARAMLINE: $param_line
 
